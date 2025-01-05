@@ -6,7 +6,7 @@
 /*   By: gyasuhir <gyasuhir@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 10:34:40 by gyasuhir          #+#    #+#             */
-/*   Updated: 2025/01/05 13:10:20 by gyasuhir         ###   ########.fr       */
+/*   Updated: 2025/01/05 13:56:39 by gyasuhir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 	u: unsigned integer
 	x: hexadecimal (lowercase)
 	X: hexadecimal (uppercase)
-	%: percent character
+	%: percent character OK
 */
 
 int	print_char(int c)
@@ -61,6 +61,19 @@ int	print_int(long i)
 	return (count);
 }
 
+// TODO: how to handle negative numbers?
+int	print_hex(unsigned long i, const char *base)
+{
+	int	count;
+
+	count = 0;
+	if (i >= 16)
+		return (print_hex(i / 16, base) + print_hex(i % 16, base));
+	else
+		count = write(1, &base[i], 1);
+	return (count);
+}
+
 int	handle_format(char flag, va_list args)
 {
 	int	count;
@@ -72,6 +85,12 @@ int	handle_format(char flag, va_list args)
 		count = print_str(va_arg(args, char *));
 	else if (flag == 'd' || flag == 'i')
 		count = print_int(va_arg(args, int));
+	else if (flag == '%')
+		count = print_char(flag);
+	else if (flag == 'x')
+		count = print_hex(va_arg(args, unsigned int), "0123456789abcdef");
+	else if (flag == 'X')
+		count = print_hex(va_arg(args, unsigned int), "0123456789ABCDEF");
 	// else if (flag == 'p')
 	// 	count = print_ptr(va_arg(args, void *));
 	return (count);
@@ -102,9 +121,9 @@ int	main(void)
 
 	void *ptr;
 
-	count = ft_printf("int: %i\n", -2147483647);
+	count = ft_printf("hex: %X\n", -420);
 	printf("count: %d\n", count);
 
-	printf("pointer: %p\n", ptr);
+	printf("pointer: %X\n", -420);
 	return (0);
 }
