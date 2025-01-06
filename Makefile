@@ -6,11 +6,11 @@
 #    By: gyasuhir <gyasuhir@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/05 10:34:45 by gyasuhir          #+#    #+#              #
-#    Updated: 2025/01/05 10:58:24 by gyasuhir         ###   ########.fr        #
+#    Updated: 2025/01/06 15:10:44 by gyasuhir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS		 = ft_printf.c
+SRCS		 = ft_printf.c utils.c
 
 OBJECTS		 = $(SRCS:%.c=%.o)
 
@@ -29,7 +29,7 @@ $(NAME): $(OBJECTS)
 	@ar rcs $(NAME) $@
 
 clean:
-	rm -f $(OBJECTS)
+	rm -f $(OBJECTS) *.h.gch
 
 fclean: clean
 	rm -f $(NAME)
